@@ -4,6 +4,7 @@ from pathlib import Path
 from random import choice
 import numpy as np
 from copy import deepcopy
+from enum import Enum
 
 from isla.parser import EarleyParser
 from isla.derivation_tree import DerivationTree
@@ -29,6 +30,11 @@ from evogfuzz.grammar_transformation import (
 )
 from evogfuzz.probabilistic_fuzzer import ProbabilisticGrammarMinerExtended
 
+class Strategy(Enum):
+    TOURNAMENT = 0
+    TRUNCATE = 1
+    ROULETTE = 2
+    RANK = 3
 
 class EvoGFrame:
     scenario: Scenario = Scenario.FUZZING
@@ -45,6 +51,7 @@ class EvoGFrame:
         transform_grammar: bool = False,
         working_dir: Path = None,
         logging: bool = False,
+        strategy: Strategy = Strategy.TOURNAMENT,
     ):
         self.grammar = grammar
         self._oracle = oracle
@@ -64,6 +71,7 @@ class EvoGFrame:
             float,
         ] = fitness_function
         self.logging = logging
+        self.strategy = strategy
 
         # Fuzzing
         self.found_exceptions = set()  # TODO Remove
@@ -183,9 +191,28 @@ class EvoGFrame:
         self._probabilistic_grammars.append((grammar, grammar_type, sum_fitness))
 
     def _select_fittest_individuals(self, test_inputs: Set[Input]) -> Set[Input]:
-        fittest_individuals = Tournament(
-            test_inputs, self._tournament_number, self._tournament_size
-        ).select_fittest_individuals()
+        fittest_individuals: Set[Input]
+        match self.strategy:
+            case Strategy.TOURNAMENT:
+                fittest_individuals = Tournament(
+                    test_inputs, self._tournament_number, self._tournament_size
+                ).select_fittest_individuals()
+            
+            case Strategy.TRUNCATE:
+                # TODO: Set fittest_individuals
+                pass
+
+            case Strategy.ROULETTE:
+                # TODO: Set fittest_individuals
+                pass
+
+            case Strategy.RANK:
+                # TODO: Set fittest_individuals
+                pass
+
+            case _:
+                # TODO: Set fittest_individuals
+                pass
 
         sum_fitness = sum([inp.fitness for inp in fittest_individuals])
         if self.logging:

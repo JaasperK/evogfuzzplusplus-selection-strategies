@@ -1,7 +1,5 @@
-import logging
-from typing import Set, List
+from typing import Set
 from evogfuzz.input import Input
-import numpy as np
 
 
 class Truncation:

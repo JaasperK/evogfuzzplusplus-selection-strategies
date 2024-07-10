@@ -21,7 +21,10 @@ from debugging_framework.execution.execution_handler import (
 from debugging_framework.execution.timeout_manager import ManageTimeout
 
 from evogfuzz.tournament_selection import Tournament
-from evogfuzz.truncaion_selection import Truncation
+from evogfuzz.truncation_selection import Truncation
+from evogfuzz.rank_selection import Rank
+from evogfuzz.roulette_wheel_selection import Roulette
+
 from evogfuzz.fitness_functions import fitness_function_failure
 from evogfuzz.input import Input
 from evogfuzz.types import GrammarType, Scenario
@@ -52,7 +55,9 @@ class EvoGFrame:
         transform_grammar: bool = False,
         working_dir: Path = None,
         logging: bool = False,
-        strategy: Strategy = Strategy.TOURNAMENT 
+        strategy: Strategy = Strategy.TOURNAMENT,
+        sp: float = 2.0,
+        size: int = 10,
     ):
     
         self.grammar = grammar
@@ -74,9 +79,14 @@ class EvoGFrame:
         ] = fitness_function
         self.logging = logging
         self.strategy = strategy
+        self.sp: float = sp
+        self.size: int = size
 
         # Fuzzing
         self.found_exceptions = set()  # TODO Remove
+
+        # Benchmark
+        self.benchmark: List[Tuple[int, int]] = []
 
         self.report = (
             MultipleFailureReport()
@@ -161,6 +171,9 @@ class EvoGFrame:
             logging.info("Timeout while generating new Inputs!")
             new_inputs = self.inputs
 
+        # Benchmark
+        self.benchmark.append((self._iteration + 1, len(self.get_found_exceptions_inputs())))
+
         return new_inputs
 
     def _do_more_iterations(self):
@@ -201,19 +214,19 @@ class EvoGFrame:
                 ).select_fittest_individuals()
             
             case Strategy.TRUNCATION:
-                # TODO: set fittest_individuals
                 fittest_individuals = Truncation(
                     test_inputs, self.truncation_threshold
                 ).select_fittest_individuals()
-                #pass
 
             case Strategy.ROULETTE:
-                # TODO: set fittest_individuals
-                pass
+                fittest_individuals = Roulette(
+                    test_inputs, self._tournament_number, self._tournament_size
+                ).select_fittest_individuals()
 
             case Strategy.RANK:
-                # TODO: set fittest_individuals
-                pass
+                fittest_individuals = Rank(
+                    test_inputs, self.sp, self.size
+                ).select_fittest_individuals()
 
         sum_fitness = sum([inp.fitness for inp in fittest_individuals])
         if self.logging:
@@ -305,6 +318,8 @@ class EvoGFrame:
     def get_all_inputs(self):
         return self._all_inputs
 
+    def get_benchmark(self):
+        return self.benchmark
 
 class EvoGFuzz(EvoGFrame):
     """

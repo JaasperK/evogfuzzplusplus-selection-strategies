@@ -30,6 +30,8 @@ from evogfuzz.grammar_transformation import (
 )
 from evogfuzz.probabilistic_fuzzer import ProbabilisticGrammarMinerExtended
 
+from evogfuzz.rank_selection import Rank
+
 class Strategy(Enum):
     TOURNAMENT = 0
     TRUNCATE = 1
@@ -213,8 +215,9 @@ class EvoGFrame:
                 pass
 
             case Strategy.RANK:
-                # TODO: set fittest_individuals
-                pass
+                fittest_individuals = Rank(
+                    test_inputs, 2.0, 10
+                ).select_fittest_individuals()
 
         sum_fitness = sum([inp.fitness for inp in fittest_individuals])
         if self.logging:

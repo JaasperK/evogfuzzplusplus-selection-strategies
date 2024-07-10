@@ -51,7 +51,7 @@ class EvoGFrame:
         transform_grammar: bool = False,
         working_dir: Path = None,
         logging: bool = False,
-        strategy: Strategy = Strategy.TOURNAMENT,
+        strategy: Strategy = Strategy.TOURNAMENT
     ):
         self.grammar = grammar
         self._oracle = oracle
@@ -199,19 +199,15 @@ class EvoGFrame:
                 ).select_fittest_individuals()
             
             case Strategy.TRUNCATE:
-                # TODO: Set fittest_individuals
+                # TODO: set fittest_individuals
                 pass
 
             case Strategy.ROULETTE:
-                # TODO: Set fittest_individuals
+                # TODO: set fittest_individuals
                 pass
 
             case Strategy.RANK:
-                # TODO: Set fittest_individuals
-                pass
-
-            case _:
-                # TODO: Set fittest_individuals
+                # TODO: set fittest_individuals
                 pass
 
         sum_fitness = sum([inp.fitness for inp in fittest_individuals])

@@ -21,6 +21,9 @@ from debugging_framework.execution.execution_handler import (
 from debugging_framework.execution.timeout_manager import ManageTimeout
 
 from evogfuzz.tournament_selection import Tournament
+from evogfuzz.rank_selection import Rank
+from evogfuzz.roulette_wheel_selection import Roulette
+
 from evogfuzz.fitness_functions import fitness_function_failure
 from evogfuzz.input import Input
 from evogfuzz.types import GrammarType, Scenario
@@ -30,7 +33,6 @@ from evogfuzz.grammar_transformation import (
 )
 from evogfuzz.probabilistic_fuzzer import ProbabilisticGrammarMinerExtended
 
-from evogfuzz.rank_selection import Rank
 
 class Strategy(Enum):
     TOURNAMENT = 0
@@ -215,8 +217,9 @@ class EvoGFrame:
                 pass
 
             case Strategy.ROULETTE:
-                # TODO: set fittest_individuals
-                pass
+                fittest_individuals = Roulette(
+                    test_inputs, self._tournament_number, self._tournament_size
+                ).select_fittest_individuals()
 
             case Strategy.RANK:
                 fittest_individuals = Rank(

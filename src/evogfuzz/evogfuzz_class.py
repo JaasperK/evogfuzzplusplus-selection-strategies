@@ -53,7 +53,9 @@ class EvoGFrame:
         transform_grammar: bool = False,
         working_dir: Path = None,
         logging: bool = False,
-        strategy: Strategy = Strategy.TOURNAMENT
+        strategy: Strategy = Strategy.TOURNAMENT,
+        sp: float = 2.0,
+        size: int = 10,
     ):
         self.grammar = grammar
         self._oracle = oracle
@@ -74,6 +76,8 @@ class EvoGFrame:
         ] = fitness_function
         self.logging = logging
         self.strategy = strategy
+        self.sp = sp
+        self.size = size
 
         # Fuzzing
         self.found_exceptions = set()  # TODO Remove
@@ -216,7 +220,7 @@ class EvoGFrame:
 
             case Strategy.RANK:
                 fittest_individuals = Rank(
-                    test_inputs, 2.0, 10
+                    test_inputs, self.sp, self.size
                 ).select_fittest_individuals()
 
         sum_fitness = sum([inp.fitness for inp in fittest_individuals])

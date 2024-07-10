@@ -30,7 +30,7 @@ class Rank:
         selection_probabilities = Rank.linear_ranking_selection_probs(ranks, self.sp)
 
         fittest: List[Input] = choices(sorted_inputs, weights=selection_probabilities, k=self.m)        
-        return fittest
+        return set(fittest)
     
     
     def simple_selection_probs(ranks: List[int]) -> List[float]:

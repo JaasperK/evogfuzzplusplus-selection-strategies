@@ -18,12 +18,12 @@ class RankSelection(unittest.TestCase):
             inp.fitness = idx
             test_inputs.add(inp)
         for inp in test_inputs:
-            print(inp, inp.oracle, inp.fitness)
+            print(inp, "\t", inp.oracle, "\t", inp.fitness)
 
         selected = Rank(test_inputs, 2.0, 10).select_fittest_individuals()
         print("______")
         for inp in selected:
-            print(inp, inp.oracle, inp.fitness)
+            print(inp, "\t", inp.oracle, "\t", inp.fitness)
 
 
 if __name__ == "__main__":

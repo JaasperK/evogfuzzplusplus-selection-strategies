@@ -52,7 +52,9 @@ class EvoGFrame:
         transform_grammar: bool = False,
         working_dir: Path = None,
         logging: bool = False,
-        strategy: Strategy = Strategy.TOURNAMENT 
+        strategy: Strategy = Strategy.TOURNAMENT,
+        sp: float = 2.0,
+        size: int = 10,
     ):
     
         self.grammar = grammar
@@ -74,6 +76,9 @@ class EvoGFrame:
         ] = fitness_function
         self.logging = logging
         self.strategy = strategy
+        self.sp: float = sp
+        self.size: int = size
+        self.truncation_threshold: float = 0.5
 
         # Fuzzing
         self.found_exceptions = set()  # TODO Remove
@@ -361,6 +366,9 @@ class EvoGGen(EvoGFrame):
         )
         self.transform_grammar = transform_grammar
         self.failure_inducing_inputs: Set[Input] = set()
+        self.strategy = strategy
+        self.population_size = population_size
+        self.truncation_threshold = truncation_threshold
 
     def _setup(self):
         for inp in self.inputs:

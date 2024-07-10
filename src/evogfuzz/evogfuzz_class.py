@@ -75,6 +75,9 @@ class EvoGFrame:
 
         # Fuzzing
         self.found_exceptions = set()  # TODO Remove
+        
+        # Benchmark
+        self.benchmark: List[Tuple[int, int]] = []
 
         self.report = (
             MultipleFailureReport()
@@ -158,6 +161,9 @@ class EvoGFrame:
         except TimeoutError:
             logging.info("Timeout while generating new Inputs!")
             new_inputs = self.inputs
+            
+        # Benchmark
+        self.benchmark.append((self._iteration + 1, len(self.get_found_exceptions_inputs())))
 
         return new_inputs
 
@@ -299,6 +305,9 @@ class EvoGFrame:
 
     def get_all_inputs(self):
         return self._all_inputs
+    
+    def get_benchmark(self):
+        return self.benchmark
 
 
 class EvoGFuzz(EvoGFrame):

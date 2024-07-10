@@ -14,7 +14,7 @@ class Truncation:
         self.population_size: int = population_size
         self.truncation_threshold: float = truncation_threshold
 
-    def select_fittest_individuals(self):
+    def select_fittest_individuals(self) -> Set[Input]:
         sorted_inputs = sorted(self.test_inputs, key=lambda inp: inp.fitness, reverse=True)
         trunc_index = int(len(sorted_inputs) * self.truncation_threshold)
         fittest = set(sorted_inputs[:trunc_index])

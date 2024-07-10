@@ -81,6 +81,7 @@ class EvoGFrame:
         self.strategy = strategy
         self.sp: float = sp
         self.size: int = size
+        self.truncation_threshold: float = 0.5
 
         # Fuzzing
         self.found_exceptions = set()  # TODO Remove

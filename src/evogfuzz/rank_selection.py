@@ -23,7 +23,7 @@ class Rank:
         self.m: int = m
 
     
-    def select_fittest_individuals(self) -> List[Input]:
+    def select_fittest_individuals(self) -> Set[Input]:
         sorted_inputs: List[Input] = sorted(self.test_inputs, key=lambda i: i.fitness, reverse=True)
         ranks: List[int] = list(range(1, len(sorted_inputs) + 1))
 

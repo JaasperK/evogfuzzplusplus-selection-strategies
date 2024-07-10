@@ -1,9 +1,15 @@
-from typing import Set
+import logging
+from typing import Set, List
 from evogfuzz.input import Input
+import numpy as np
 
 
 class Truncation:
-    def __init__(self, test_inputs: Set[Input], population_size: int = 100, truncation_threshold: float = 0.5):
+    def __init__(self, 
+                 test_inputs: Set[Input], 
+                 population_size: int = 100, 
+                 truncation_threshold: float = 0.5):
+        
         self.test_inputs: Set[Input] = test_inputs
         self.population_size: int = population_size
         self.truncation_threshold: float = truncation_threshold

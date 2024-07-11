@@ -210,7 +210,7 @@ class EvoGFrame:
             
             case Strategy.TRUNCATION:
                 fittest_individuals = Truncation(
-                    test_inputs, self.truncation_threshold
+                    test_inputs, self.size, self.truncation_threshold
                 ).select_fittest_individuals()
 
             case Strategy.ROULETTE:

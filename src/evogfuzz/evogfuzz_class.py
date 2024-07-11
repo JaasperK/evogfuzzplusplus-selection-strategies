@@ -24,18 +24,13 @@ from evogfuzz.tournament_selection import Tournament
 from evogfuzz.truncation_selection import Truncation
 from evogfuzz.fitness_functions import fitness_function_failure
 from evogfuzz.input import Input
-from evogfuzz.types import GrammarType, Scenario
+from evogfuzz.types import GrammarType, Scenario, Strategy
 from evogfuzz.grammar_transformation import (
     get_transformed_grammar,
     get_transformed_grammar_from_strings,
 )
 from evogfuzz.probabilistic_fuzzer import ProbabilisticGrammarMinerExtended
 
-class Strategy(Enum):
-    TOURNAMENT = 0
-    TRUNCATION = 1
-    ROULETTE = 2
-    RANK = 3
 
 class EvoGFrame:
     scenario: Scenario = Scenario.FUZZING

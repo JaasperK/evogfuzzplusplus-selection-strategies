@@ -366,9 +366,6 @@ class EvoGGen(EvoGFrame):
         )
         self.transform_grammar = transform_grammar
         self.failure_inducing_inputs: Set[Input] = set()
-        self.strategy = strategy
-        self.population_size = population_size
-        self.truncation_threshold = truncation_threshold
 
     def _setup(self):
         for inp in self.inputs:

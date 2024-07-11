@@ -21,7 +21,8 @@ class Truncation:
         
         fittest = set()
         for _ in range(self.population_size):
-            r = random.randint(int((1 - self.truncation_threshold) * len(sorted_inputs)), len(sorted_inputs) - 1)
+            r = random.randint(int((1 - self.truncation_threshold) * len(sorted_inputs)), 
+                               len(sorted_inputs) - 1)
             fittest.add(selected_individuals[r])
         
         return fittest

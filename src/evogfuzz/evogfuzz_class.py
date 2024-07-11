@@ -4,7 +4,6 @@ from pathlib import Path
 from random import choice
 import numpy as np
 from copy import deepcopy
-from enum import Enum
 
 from isla.parser import EarleyParser
 from isla.derivation_tree import DerivationTree

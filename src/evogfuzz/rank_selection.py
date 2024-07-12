@@ -31,20 +31,14 @@ class Rank:
 
         fittest: List[Input] = choices(sorted_inputs, weights=selection_probabilities, k=self.m)        
         return set(fittest)
-    
-    
-    def simple_selection_probs(ranks: List[int]) -> List[float]:
-        ranks_sum = sum(ranks)
-        return [r / ranks_sum for r in reversed(ranks)]
 
 
     # See: A. Sokolov et al. "A note on the variance of rank-based selection strategies for genetic algorithms and genetic programming"
     def linear_ranking_selection_probs(ranks: List[int], S: float):
         P = float(len(ranks))
-        # TODO: fix float division by zero error
         try:
             probs = [(S - (2.0 - S)) * (P - i) / (P - 1) + (2.0 - S) for i in ranks]
-        except:
-            probs = [2.0 for i in ranks]
+        except:  # catch float division by zero error, occurs when P = 1.0
+            return [1.0]
         return [prob / P for prob in probs]
 

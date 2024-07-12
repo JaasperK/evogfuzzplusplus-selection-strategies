@@ -23,6 +23,8 @@ from evogfuzz.roulette_wheel_selection import Roulette
 from evogfuzz.truncation_selection import Truncation
 from evogfuzz.tournament_selection import Tournament
 from evogfuzz.rank_selection import Rank
+from evogfuzz.stochastic_universal_sampling import StochasticUniversalSampling
+
 
 from evogfuzz.fitness_functions import fitness_function_failure
 from evogfuzz.input import Input
@@ -220,6 +222,11 @@ class EvoGFrame:
 
             case Strategy.RANK:
                 fittest_individuals = Rank(
+                    test_inputs, self.sp, self.size
+                ).select_fittest_individuals()
+
+            case Strategy.STOCHASTIC_UNIVERSAL_SAMPLING:
+                fittest_individuals = StochasticUniversalSampling(
                     test_inputs, self.sp, self.size
                 ).select_fittest_individuals()
 

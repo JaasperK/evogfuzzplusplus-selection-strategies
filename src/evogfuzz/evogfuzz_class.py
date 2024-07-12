@@ -227,7 +227,7 @@ class EvoGFrame:
 
             case Strategy.STOCHASTIC_UNIVERSAL_SAMPLING:
                 fittest_individuals = StochasticUniversalSampling(
-                    test_inputs, self.sp, self.size
+                    test_inputs, self.size
                 ).select_fittest_individuals()
 
         sum_fitness = sum([inp.fitness for inp in fittest_individuals])

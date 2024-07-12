@@ -21,6 +21,7 @@ class Strategy(Enum):
     TRUNCATION = 1
     ROULETTE = 2
     RANK = 3
+    STOCHASTIC_UNIVERSAL_SAMPLING = 4
 
     def __str__(self) -> str:
         return self.value

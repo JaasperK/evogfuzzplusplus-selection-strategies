@@ -17,10 +17,10 @@ class GrammarType(Enum):
         return self.value
 
 class Strategy(Enum):
-    TOURNAMENT = 0
-    TRUNCATION = 1
-    ROULETTE = 2
-    RANK = 3
+    TOURNAMENT = "Tournament"
+    TRUNCATION = "Truncation"
+    ROULETTE = "Roulette"
+    RANK = "Rank"
 
     def __str__(self) -> str:
         return self.value

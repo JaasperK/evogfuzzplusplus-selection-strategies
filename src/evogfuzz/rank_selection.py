@@ -41,6 +41,10 @@ class Rank:
     # See: A. Sokolov et al. "A note on the variance of rank-based selection strategies for genetic algorithms and genetic programming"
     def linear_ranking_selection_probs(ranks: List[int], S: float):
         P = float(len(ranks))
-        probs = [(S - (2.0 - S)) * (P - i) / (P - 1) + (2.0 - S) for i in ranks]
+        # TODO: fix float division by zero error
+        try:
+            probs = [(S - (2.0 - S)) * (P - i) / (P - 1) + (2.0 - S) for i in ranks]
+        except:
+            probs = [2.0 for i in ranks]
         return [prob / P for prob in probs]
 

@@ -8,11 +8,12 @@ from evogfuzz.input import Input
 from evogfuzz.stochastic_universal_sampling import StochasticUniversalSampling as SUSampling
 
 
-class TestStochasticUniversalSampling(unittest.TestCase):
+class StochasticUniversalSampling(unittest.TestCase):
     def test_selection(self):
         print()
         fuzzer = GrammarFuzzer(grammar)
         test_inputs = set()
+        #for idx, _ in enumerate(range(100)):
         for idx in range(100):
             inp = Input(DerivationTree.from_parse_tree(fuzzer.fuzz_tree()))
             inp.fitness = idx

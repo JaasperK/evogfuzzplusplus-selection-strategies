@@ -18,11 +18,11 @@ class GrammarType(Enum):
 
 
 class Strategy(Enum):
-    TOURNAMENT = 0
-    TRUNCATION = 1
-    ROULETTE = 2
-    RANK = 3
-    STOCHASTIC_UNIVERSAL_SAMPLING = 4
+    TOURNAMENT = "Tournament"
+    TRUNCATION = "Truncation"
+    ROULETTE = "Roulette"
+    RANK = "Rank"
+    STOCHASTIC_UNIVERSAL_SAMPLING = "Stochastic Universal Sampling"
 
     def __str__(self) -> str:
         return self.value

@@ -24,13 +24,17 @@ class Rank:
 
     
     def select_fittest_individuals(self) -> Set[Input]:
-        sorted_inputs: List[Input] = sorted(self.test_inputs, key=lambda i: i.fitness, reverse=True)
-        ranks: List[int] = list(range(1, len(sorted_inputs) + 1))
+        try:
+            sorted_inputs: List[Input] = sorted(self.test_inputs, key=lambda i: i.fitness, reverse=True)
+            ranks: List[int] = list(range(1, len(sorted_inputs) + 1))
 
-        selection_probabilities = Rank.linear_ranking_selection_probs(ranks, self.sp)
+            selection_probabilities = Rank.linear_ranking_selection_probs(ranks, self.sp)
 
-        fittest: List[Input] = choices(sorted_inputs, weights=selection_probabilities, k=self.m)        
-        return set(fittest)
+            fittest: List[Input] = choices(sorted_inputs, weights=selection_probabilities, k=self.m)        
+            return set(fittest)
+        except:
+            fittest: Set[Input] = set()
+            return fittest
 
 
     # See: A. Sokolov et al. "A note on the variance of rank-based selection strategies for genetic algorithms and genetic programming"
